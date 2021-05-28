@@ -3,7 +3,7 @@
  */
 
 import { App } from 'vue'
-import { ElButton, ElTable, ElTableColumn } from 'element-plus'
+import { ElButton, ElForm, ElFormItem, ElInput, ElTable, ElTableColumn } from 'element-plus'
 
 const elementOption = {
   size: 'small',
@@ -13,5 +13,5 @@ const elementOption = {
 export function useElement(app: App) {
   app.config.globalProperties.$ELEMENT = elementOption
 
-  app.use(ElButton).use(ElTable).use(ElTableColumn)
+  app.use(ElButton).use(ElTable).use(ElTableColumn).use(ElForm).use(ElFormItem).use(ElInput)
 }
