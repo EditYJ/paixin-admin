@@ -1,19 +1,19 @@
 <template>
   <div class="login-page">
     <div class="login-page__back"></div>
-    <el-form class="login-page__form" :model="formData">
+    <el-form class="login-page__form" :model="formData" :rules="rules">
       <h1 class="login-page__title">
         <div class="login-page__logo"><img :src="paixinIco" /></div>
         拍信后台管理系统
       </h1>
-      <el-form-item class="login-page__form-item">
+      <el-form-item class="login-page__form-item" prop="username">
         <el-input size="large" v-model="formData.username" placeholder="请输入用户名">
           <template #prefix>
             <i class="el-input__icon el-icon-user"></i>
           </template>
         </el-input>
       </el-form-item>
-      <el-form-item class="login-page__form-item">
+      <el-form-item class="login-page__form-item" prop="password">
         <el-input size="large" show-password v-model="formData.password" placeholder="请输入密码">
           <template #prefix>
             <i class="el-input__icon el-icon-key"></i>
@@ -31,6 +31,9 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
+
+import { loginIn } from '@/api/user'
+
 import paixinIco from '@/assets/favicon.ico'
 
 export interface LoginFormData {
@@ -42,12 +45,16 @@ export default defineComponent({
   name: 'Login',
   setup() {
     const formData = reactive<LoginFormData>({ username: '', password: '' })
-
-    const login = () => {
-      // console.log(formData)
+    const rules = {
+      username: [{ required: true, message: '请输入用户名' }],
+      password: [{ required: true, message: '请输入密码' }],
     }
 
-    return { formData, paixinIco, login }
+    const login = () => {
+      loginIn(formData).then(res => console.log(res))
+    }
+
+    return { formData, paixinIco, login, rules }
   },
 })
 </script>
@@ -78,6 +85,7 @@ export default defineComponent({
     box-shadow: 0px 0px 10px 5px #ccc;
   }
   @include e(form-item) {
+    margin-top: 12px;
     width: 100%;
   }
   @include e(title) {

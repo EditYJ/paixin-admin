@@ -21,14 +21,19 @@ const service = axios.create({
   timeout: 5000,
 })
 
-service.interceptors.request.use(req => {
+service.interceptors.request.use(requestConfig => {
   store.commit('global/START_LOADING')
-  const { headers } = req
-  if (!headers.Authorizatation) {
-    headers.Authorizatation = 'Bear edityj'
+
+  // 请求是否使用 mock， 生产环境不能使用 mock
+  if (requestConfig.isMock && config.env != 'prod') {
+    requestConfig.baseURL = config.MOCK_BASE_URL
   }
 
-  return req
+  if (!requestConfig.headers.Authorizatation) {
+    requestConfig.headers.Authorizatation = 'Bear edityj'
+  }
+
+  return requestConfig
 })
 
 service.interceptors.response.use(

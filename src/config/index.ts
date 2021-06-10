@@ -7,7 +7,7 @@ interface ConfigItem {
 }
 
 const env = import.meta.env.VITE_ENV || 'prod'
-const mockUrl = 'https://www.fastmock.site/mock/44065c0f89c00ac3a962a8160b81c131/admin-test'
+const mockUrl = 'https://www.fastmock.site/mock/63fcdd1041fb52bef3129b679edf96cd/paixin-admin'
 
 const envConfig: { [key: string]: ConfigItem } = {
   dev: {
