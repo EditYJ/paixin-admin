@@ -6,5 +6,5 @@ import { LoginRequest, UserInfo } from './type'
  * @returns 测试接口的返回结果
  */
 export function loginIn(body: LoginRequest) {
-  return request.post<ApiResponse<UserInfo>>('/users/login', body, { isMock: true })
+  return request.post<ApiResponse<UserInfo>>('/users/login', body)
 }

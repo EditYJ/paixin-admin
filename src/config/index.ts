@@ -11,7 +11,7 @@ const mockUrl = 'https://www.fastmock.site/mock/63fcdd1041fb52bef3129b679edf96cd
 
 const envConfig: { [key: string]: ConfigItem } = {
   dev: {
-    BASE_URL: 'dev.com',
+    BASE_URL: '/api/v1',
     MOCK_BASE_URL: mockUrl,
   },
   test: {
@@ -28,7 +28,7 @@ const resConfig = envConfig[env]
 
 export default {
   env,
-  isMock: true,
+  isMock: false,
   localStorageNamespace: 'paixin-admin',
   ...resConfig,
 }
