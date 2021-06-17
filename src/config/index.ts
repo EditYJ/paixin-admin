@@ -28,7 +28,7 @@ const resConfig = envConfig[env]
 
 export default {
   env,
-  isMock: false,
+  isMock: true,
   localStorageNamespace: 'paixin-admin',
   ...resConfig,
 }

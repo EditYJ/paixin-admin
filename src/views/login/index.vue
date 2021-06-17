@@ -1,7 +1,7 @@
 <template>
   <div class="login-page">
     <div class="login-page__back"></div>
-    <el-form class="login-page__form" :model="formData" :rules="rules">
+    <el-form class="login-page__form" :model="formData" :rules="rules" ref="formRef">
       <h1 class="login-page__title">
         <div class="login-page__logo"><img :src="paixinIco" /></div>
         拍信后台管理系统
@@ -21,7 +21,13 @@
         </el-input>
       </el-form-item>
       <el-form-item class="login-page__form-item">
-        <el-button size="large" class="login-page__login-btn" type="primary" @click="login">
+        <el-button
+          size="large"
+          class="login-page__login-btn"
+          type="primary"
+          @click="login"
+          :loading="isLoading"
+        >
           登录
         </el-button>
       </el-form-item>
@@ -30,11 +36,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { computed, defineComponent, reactive, ref } from 'vue'
 
 import { loginIn } from '@/api/user'
 
 import paixinIco from '@/assets/favicon.ico'
+import { ElFormItemContext } from 'element-plus/lib/el-form'
+import { useRouter } from 'vue-router'
+import { useStore } from '@/store'
 
 export interface LoginFormData {
   username: string
@@ -44,17 +53,29 @@ export interface LoginFormData {
 export default defineComponent({
   name: 'Login',
   setup() {
+    const router = useRouter()
+    const store = useStore()
+    const formRef = ref<ElFormItemContext | null>(null)
     const formData = reactive<LoginFormData>({ username: '', password: '' })
     const rules = {
       username: [{ required: true, message: '请输入用户名' }],
       password: [{ required: true, message: '请输入密码' }],
     }
+    const isLoading = computed(() => store.getters['global/isLoading'])
 
     const login = () => {
-      loginIn(formData).then(res => console.log(res))
+      if (formRef.value) {
+        formRef.value.validate(async isValid => {
+          if (isValid) {
+            const res = await loginIn(formData)
+            console.log(res)
+            router.push('/welcome')
+          }
+        })
+      }
     }
 
-    return { formData, paixinIco, login, rules }
+    return { formData, paixinIco, login, rules, formRef, isLoading }
   },
 })
 </script>

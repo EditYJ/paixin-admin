@@ -10,8 +10,13 @@ const routes: RouteRecordRaw[] = [
     name: 'home',
     path: '/',
     component: () => import('@/layout/CommonLayout.vue'),
-    redirect: '/dashboard',
+    redirect: '/login',
     children: [
+      {
+        name: 'welcome',
+        path: 'welcome',
+        component: () => import('@/views/welcome/index.vue'),
+      },
       {
         name: 'dashboard',
         path: 'dashboard',

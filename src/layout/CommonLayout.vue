@@ -1,6 +1,8 @@
 <template>
   <div class="common-layout">
-    <div class="common-layout__left-menu"></div>
+    <div class="common-layout__left-menu">
+      <MenuIconTitle />
+    </div>
     <div class="common-layout__right-content">
       <div class="common-layout__top-bar"></div>
       <div class="common-layout__main-area">
@@ -14,11 +16,11 @@
 
 <script lang='ts'>
 import { defineComponent } from 'vue'
+import MenuIconTitle from './component/MenuIconTitle.vue'
+
 export default defineComponent({
   name: 'CommonLayout',
-  setup(props, ctx) {
-    return {}
-  },
+  components: { MenuIconTitle },
 })
 </script>
 
